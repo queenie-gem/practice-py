@@ -1,0 +1,22 @@
+Our Questions
+How can i make the password persits
+how can i make login persits
+how does i encrpt in python 
+how do i make it easy to understand the program
+
+Possible answers
+1. lets save it to a file 
+2. also a file
+3. i would check stack overflow 
+4. use good variable names an output well to  users 
+
+which file format can we use ro save the file for better sturctue 
+csv or json but i think json is better i understadm it better and it has more sturctue
+
+Unanswered Questions
+how do we save a json file in python    
+how do we encrpt in python
+
+
+login feature
+we take a username, a password, and we save it and encrpt it note they havewew to register beforew they can login 

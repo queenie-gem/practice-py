@@ -1,6 +1,3 @@
-from django.views.generic import edit
-
-
 name = input("enter your name: ")
 print(f"welcome {name} ")
 
