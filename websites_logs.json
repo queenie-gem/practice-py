@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "website": "mario.com",
+        "username": "ime@mario.com",
+        "password": "qwerty",
+        "user_id": 1
+    },
+    {
+        "id": 2,
+        "website": "1win.co",
+        "username": "iiopoi",
+        "password": "queen",
+        "user_id": 1
+    },
+    {
+        "id": 3,
+        "website": "sample.com",
+        "username": "sample",
+        "password": "qwertyuiop",
+        "user_id": 1
+    },
+    {
+        "id": 4,
+        "website": "sharry.com",
+        "username": "sharryrose",
+        "password": "sharry21",
+        "user_id": 3
+    },
+    {
+        "id": 5,
+        "website": "sharry.ng",
+        "username": "sharry",
+        "password": "sha234",
+        "user_id": 3
+    }
+]
