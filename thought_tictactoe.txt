@@ -1,0 +1,13 @@
+implementation of two players [x, o]
+board for the game in array 3 * 3
+decieding the players turn
+players chooses where to play
+update after every player players
+winning decieding
+restart after game ends 
+
+Questions??
+How will my game be represented on the board? list, nexted list
+What must the computer know at any point in the game?
+
+board representation
