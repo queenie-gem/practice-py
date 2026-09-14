@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "name": "Sharon-Rose Mercy",
+        "age": "21",
+        "class": "SS2",
+        "email": "Mercy@gmail.com",
+        "password": "Sharry123"
+    },
+    {
+        "id": 2,
+        "name": "Mercy Mary",
+        "age": "12",
+        "class": "JSS2",
+        "email": "Mary@gmail.com",
+        "password": "Maryano"
+    }
+]

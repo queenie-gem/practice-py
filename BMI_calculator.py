@@ -1,13 +1,19 @@
-# creating a BMI calculator using python
+# creating a BMI calculator using python 
 
 def calculate_bmi():
     name = input("Enter your name: ")
 
-    weight = float(input(f" {name}, enter your weight in kg: "))
-    height = float(input(f" {name}, enter your height in meters: "))
+    weight_type = input(f"{name} Do you want to enter your weight in 'kg' or 'pounds'?: ")
 
-    BMI = weight / (height * height)
-
+    if weight_type == 'pounds':
+        weight = float(input(f" {name}, Enter your weight in pounds: "))
+        height = float(input(f" {name}, Enter your height in meters: "))
+        BMI = (weight / 2.20462) / (height * height)
+    else:
+        weight = float(input(f" {name}, Enter your weight in kg: "))
+        height = float(input(f" {name}, Enter your height in meters: "))
+        BMI = weight  / (height * height)
+    
     print(f"Your BMI IS {BMI}")
 
     if BMI > 0:
@@ -15,7 +21,7 @@ def calculate_bmi():
             print(f"{name} you are underweight")
         elif BMI <= 24.9:
             print(f"{name} you are Normal Weight")  
-        elif BMI < 29.9:
+        elif BMI <= 29.9:
             print(f"{name} you are Over weight")
         elif BMI <= 34.9:
             print(f"{name} you are Obese")   

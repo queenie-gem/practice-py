@@ -1,0 +1,3 @@
+design and implement a cli school management system
+
+

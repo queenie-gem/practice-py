@@ -48,6 +48,7 @@ def check_and_write_file(filename, data):
 # this loads the users.json and websites_logs.json files into the users_db and website_logs variables respectively
 users_db = check_and_load_file(USERS_FILE)
 website_logs = check_and_load_file(WEBSITE_LOGS_FILE)
+
 # this variable will hold the logged in user information after successful login or account creation
 logged_in_user = None
 
