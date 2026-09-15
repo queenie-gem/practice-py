@@ -101,36 +101,46 @@ if user_status == "1":
 """)
 
     user_type = input("Select an option: ").strip()
+
     # RETURNING STUDENT
     if user_type == "1":
-        print("\n========== STUDENT LOGIN ==========")
-        student_name = input("Enter Student Name: ").strip()
-        password = input("Enter Password: ").strip()
-        # Check if student exists
 
+        print("\n========== STUDENT LOGIN ==========")
+
+        student_id = int(input("Enter Student ID: "))
+        password = input("Enter Password: ").strip()
+
+        # Check if student exists
         student_found = False
 
         for student in students_db:
 
-            if student["name"].lower() == student_name.lower():
+            if student["id"] == student_id:
+
                 student_found = True
 
                 # Check password
-
                 if student["password"] == password:
+
                     print(f"\nWelcome back, {student['name']}!")
 
-                    # student menu
+                    # STUDENT MENU
                     while True:
+
                         print("""
             STUDENT MENU
+
 1. View Profile
 2. View Subjects
 3. View Results
 4. Logout
 """)
+
                         student_choice = int(input("Select an option: "))
+
+                        # VIEW PROFILE
                         if student_choice == 1:
+
                             print("\n========== STUDENT PROFILE ==========")
                             print(f"ID: {student['id']}")
                             print(f"Name: {student['name']}")
@@ -138,64 +148,81 @@ if user_status == "1":
                             print(f"Class: {student['class']}")
                             print(f"Email: {student['email']}")
 
+                        # VIEW SUBJECTS
                         elif student_choice == 2:
-                                print("\n========== SUBJECTS ==========")
 
-                                if not subjects_db:
+                            print("\n========== SUBJECTS ==========")
 
-                                    print("No subjects available.")
+                            if not subjects_db:
 
-                                else:
+                                print("No subjects available.")
+
+                            else:
+
+                                for subject in subjects_db:
+
+                                    print(f"ID: {subject['id']}")
+                                    print(f"Subject: {subject['name']}")
+                                    print(f"Teacher: {subject['teacher']}")
+                                    print("--------------------------------")
+
+                        # VIEW RESULTS
+                        elif student_choice == 3:
+
+                            print("\n========== RESULTS ==========")
+
+                            student_results = []
+
+                            # Find results belonging to the logged-in student
+                            for result in results_db:
+
+                                if result["student_id"] == student["id"]:
+
+                                    student_results.append(result)
+
+                            # Check if student has any results
+                            if not student_results:
+
+                                print("No results available.")
+
+                            else:
+
+                                for result in student_results:
+
+                                    # Find the subject
                                     for subject in subjects_db:
 
-                                        print(f"ID: {subject['id']}")
-                                        print(f"Subject: {subject['name']}")
-                                        print(f"Teacher: {subject['teacher']}")
-                                        print("--------------------------------")
-                        elif student_choice == 3:
-                                print("\n========== RESULTS ==========")
+                                        if subject["id"] == result["subject_id"]:
 
-                                student_results = []
+                                            print(f"Subject: {subject['name']}")
+                                            print(f"Teacher: {subject['teacher']}")
+                                            print(f"Score: {result['score']}")
+                                            print("--------------------------------")
+                                            break
 
-                                # Find results belonging to the logged-in student
-                                for result in results_db:
-
-                                    if result["student_id"] == student["id"]:
-
-                                        student_results.append(result)
-
-                                # Check if student has any results
-                                if not student_results:
-
-                                    print("No results available.")
-
-                                else:
-
-                                    for result in student_results:
-
-                                        # Find the subject
-                                        for subject in subjects_db:
-
-                                            if subject["id"] == result["subject_id"]:
-
-                                                print(f"Subject: {subject['name']}")
-                                                print(f"Teacher: {subject['teacher']}")
-                                                print(f"Score: {result['score']}")
-                                                print("--------------------------------")
-                                                break
-
+                        # LOGOUT
                         elif student_choice == 4:
 
                             print("\nLogging out...")
                             break
+
+                        else:
+
+                            print("\nInvalid option. Please try again.")
+
                 else:
+
                     print("\nIncorrect password.")
+
                 break
+
         if not student_found:
+
             print("\nStudent not found.")
 
     # RETURNING TEACHER
     elif user_type == "2":
+
         print("\n========== TEACHER LOGIN ==========")
 
         teacher_id = int(input("Enter Teacher ID: "))
@@ -215,26 +242,23 @@ if user_status == "1":
 
                     print(f"\nWelcome back, {teacher['name']}!")
 
-                    # ==========================
                     # TEACHER MENU
-                    # ==========================
-
                     while True:
 
                         print("""
-    ========================================
-                TEACHER MENU
-    ========================================
+========================================
+             TEACHER MENU
+========================================
 
-    1. View Profile
-    2. Create Subject
-    3. View Subjects
-    4. View Students
-    5. Enter Results
-    6. Logout
+1. View Profile
+2. Create Subject
+3. View Subjects
+4. View Students
+5. Enter Results
+6. Logout
 
-    ========================================
-    """)
+========================================
+""")
 
                         teacher_choice = int(input("Select an option: "))
 
@@ -242,7 +266,6 @@ if user_status == "1":
                         if teacher_choice == 1:
 
                             print("\n========== TEACHER PROFILE ==========")
-
                             print(f"ID: {teacher['id']}")
                             print(f"Name: {teacher['name']}")
                             print(f"Age: {teacher['age']}")
@@ -261,28 +284,44 @@ if user_status == "1":
 
                             else:
 
-                                # Create subject ID
-                                subject_id = len(subjects_db) + 1
+                                # Check if subject already exists
+                                subject_exists = False
 
-                                subject = {
-                                    "id": subject_id,
-                                    "name": subject_name,
-                                    "teacher": teacher["name"]
-                                }
+                                for subject in subjects_db:
 
-                                # Add subject to database
-                                subjects_db.append(subject)
+                                    if subject["name"].lower() == subject_name.lower():
 
-                                # Save subjects to JSON
-                                check_and_write_file(
-                                    SUBJECTS_FILE,
-                                    json.dumps(subjects_db, indent=4)
-                                )
+                                        subject_exists = True
+                                        break
 
-                                print("\nSubject created successfully!")
-                                print(f"Subject: {subject_name}")
-                                print(f"Teacher: {teacher['name']}")
-                                print(f"Subject ID: {subject_id}")
+                                if subject_exists:
+
+                                    print("\nThis subject already exists.")
+
+                                else:
+
+                                    # Create subject ID
+                                    subject_id = len(subjects_db) + 1
+
+                                    subject = {
+                                        "id": subject_id,
+                                        "name": subject_name,
+                                        "teacher": teacher["name"]
+                                    }
+
+                                    # Add subject to database
+                                    subjects_db.append(subject)
+
+                                    # Save subjects to JSON
+                                    check_and_write_file(
+                                        SUBJECTS_FILE,
+                                        json.dumps(subjects_db, indent=4)
+                                    )
+
+                                    print("\nSubject created successfully!")
+                                    print(f"Subject: {subject_name}")
+                                    print(f"Teacher: {teacher['name']}")
+                                    print(f"Subject ID: {subject_id}")
 
                         # VIEW SUBJECTS
                         elif teacher_choice == 3:
@@ -337,7 +376,10 @@ if user_status == "1":
 
                                 for student in students_db:
 
-                                    print(f"ID: {student['id']} | Name: {student['name']}")
+                                    print(
+                                        f"ID: {student['id']} | "
+                                        f"Name: {student['name']}"
+                                    )
 
                                 student_id = int(input("\nEnter Student ID: "))
 
@@ -374,7 +416,9 @@ if user_status == "1":
                                                 f"Subject: {subject['name']}"
                                             )
 
-                                        subject_id = int(input("\nEnter Subject ID: "))
+                                        subject_id = int(
+                                            input("\nEnter Subject ID: ")
+                                        )
 
                                         # Find subject
                                         subject_found = False
@@ -398,32 +442,70 @@ if user_status == "1":
                                             # Check score
                                             if score < 0 or score > 100:
 
-                                                print("\nScore must be between 0 and 100.")
+                                                print(
+                                                    "\nScore must be between 0 and 100."
+                                                )
 
                                             else:
 
-                                                result_id = len(results_db) + 1
+                                                # Check if result already exists
+                                                result_exists = False
 
-                                                result = {
-                                                    "id": result_id,
-                                                    "student_id": selected_student["id"],
-                                                    "subject_id": selected_subject["id"],
-                                                    "score": score
-                                                }
+                                                for result in results_db:
 
-                                                # Add result to database
-                                                results_db.append(result)
+                                                    if (
+                                                        result["student_id"]
+                                                        == selected_student["id"]
+                                                        and
+                                                        result["subject_id"]
+                                                        == selected_subject["id"]
+                                                    ):
 
-                                                # Save results to JSON
-                                                check_and_write_file(
-                                                    RESULTS_FILE,
-                                                    json.dumps(results_db, indent=4)
-                                                )
+                                                        result_exists = True
+                                                        break
 
-                                                print("\nResult entered successfully!")
-                                                print(f"Student: {selected_student['name']}")
-                                                print(f"Subject: {selected_subject['name']}")
-                                                print(f"Score: {score}")
+                                                if result_exists:
+
+                                                    print(
+                                                        "\nThis student already "
+                                                        "has a result for this subject."
+                                                    )
+
+                                                else:
+
+                                                    result_id = len(results_db) + 1
+
+                                                    result = {
+                                                        "id": result_id,
+                                                        "student_id": selected_student["id"],
+                                                        "subject_id": selected_subject["id"],
+                                                        "score": score
+                                                    }
+
+                                                    # Add result to database
+                                                    results_db.append(result)
+
+                                                    # Save results to JSON
+                                                    check_and_write_file(
+                                                        RESULTS_FILE,
+                                                        json.dumps(
+                                                            results_db,
+                                                            indent=4
+                                                        )
+                                                    )
+
+                                                    print(
+                                                        "\nResult entered successfully!"
+                                                    )
+                                                    print(
+                                                        f"Student: "
+                                                        f"{selected_student['name']}"
+                                                    )
+                                                    print(
+                                                        f"Subject: "
+                                                        f"{selected_subject['name']}"
+                                                    )
+                                                    print(f"Score: {score}")
 
                         # LOGOUT
                         elif teacher_choice == 6:
@@ -441,13 +523,26 @@ if user_status == "1":
 
                 break
 
-    if not teacher_found:
+        if not teacher_found:
 
-        print("\nTeacher not found.")
+            print("\nTeacher not found.")
 
+    # BACK
+    elif user_type == "3":
+
+        print("\nReturning to main menu...")
+
+    else:
+
+        print("\nInvalid option.")
+
+
+# ==========================================================
 # NEW USER
+# ==========================================================
 
 elif user_status == "2":
+
     print("""
 ========================================
             REGISTER AS
@@ -464,6 +559,7 @@ elif user_status == "2":
 
     # NEW STUDENT
     if user_type == "1":
+
         print("\n========== STUDENT REGISTRATION ==========")
         print(f"Welcome to {APP_NAME} School Management System.")
 
@@ -474,23 +570,31 @@ elif user_status == "2":
         password = input("Enter Password: ").strip()
 
         # Check required information
-
         if not name or not password:
-            print("\nName and password are required.")
-        else:
-            # Check if student already exists
 
+            print("\nName and password are required.")
+
+        else:
+
+            # Check if student already exists
             student_exists = False
+
             for student in students_db:
+
                 if student["name"].lower() == name.lower():
+
                     student_exists = True
                     break
 
             if student_exists:
+
                 print("\nA student with this name already exists.")
+
             else:
+
                 # Create new student
                 student_id = len(students_db) + 1
+
                 student = {
                     "id": student_id,
                     "name": name,
@@ -504,45 +608,53 @@ elif user_status == "2":
                 students_db.append(student)
 
                 # Save students to JSON file
-
                 check_and_write_file(
                     STUDENTS_FILE,
                     json.dumps(students_db, indent=4)
                 )
+
                 print("\nAccount created successfully!")
+                print(f"Your Student ID is: {student_id}")
                 print(f"Welcome to {APP_NAME}, {name}!")
 
-    # NEW TEACHER
 
+    # NEW TEACHER
     elif user_type == "2":
+
         print("\n========== TEACHER REGISTRATION ==========")
         print(f"Welcome to {APP_NAME} School Management System.")
-        
+
         name = input("Enter Full Name: ").strip()
         age = input("Enter Age: ").strip()
         email = input("Enter Email: ").strip()
         password = input("Enter Password: ").strip()
 
-
         # Check required information
-
         if not name or not password:
+
             print("\nName and password are required.")
 
         else:
-            # Check if teacher already exists
 
+            # Check if teacher already exists
             teacher_exists = False
+
             for teacher in teachers_db:
+
                 if teacher["name"].lower() == name.lower():
+
                     teacher_exists = True
                     break
 
             if teacher_exists:
+
                 print("\nA teacher with this name already exists.")
+
             else:
+
                 # Create new teacher
                 teacher_id = len(teachers_db) + 1
+
                 teacher = {
                     "id": teacher_id,
                     "name": name,
@@ -554,23 +666,32 @@ elif user_status == "2":
                 # Add teacher to database
                 teachers_db.append(teacher)
 
-                # Save teacher to JSON file
-
+                # Save teachers to JSON file
                 check_and_write_file(
                     TEACHERS_FILE,
                     json.dumps(teachers_db, indent=4)
                 )
+
                 print("\nAccount created successfully!")
+                print(f"Your Teacher ID is: {teacher_id}")
                 print(f"Welcome to {APP_NAME}, {name}!")
+
     elif user_type == "3":
+
         print("\nReturning to main menu...")
+
     else:
+
         print("\nInvalid option.")
+
 
 # EXIT
 elif user_status == "3":
+
     print(f"\nThank you for using {APP_NAME}.")
+
 
 # INVALID OPTION
 else:
+
     print("\nInvalid option. Please restart the application.")

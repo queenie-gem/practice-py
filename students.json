@@ -14,5 +14,13 @@
         "class": "JSS2",
         "email": "Mary@gmail.com",
         "password": "Maryano"
+    },
+    {
+        "id": 3,
+        "name": "Sharry",
+        "age": "21",
+        "class": "SS2",
+        "email": "Sharry@gmail.com",
+        "password": "Sharry1234"
     }
 ]
