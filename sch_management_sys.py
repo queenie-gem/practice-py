@@ -68,23 +68,17 @@ results_db = check_and_load_file(RESULTS_FILE)
 # NEW OR RETURNING USER
 
 print("""
-========================================
         WELCOME TO SHARRYSMS
-========================================
 
 1. Returning User
 2. New User
 3. Exit
 
-========================================
 """)
 
 user_status = input("Select an option: ").strip()
 
-
-# ==========================================================
 # RETURNING USER
-# ==========================================================
 
 if user_status == "1":
 
