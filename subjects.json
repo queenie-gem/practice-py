@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Mathematics",
+        "teacher": "Mr Robert"
+    },
+    {
+        "id": 2,
+        "name": "English Language",
+        "teacher": "Mrs Grace"
+    },
+    {
+        "id": 3,
+        "name": "Computer Science",
+        "teacher": "Mr David"
+    },
+    {
+        "id": 4,
+        "name": "Biology",
+        "teacher": "Miss sharon"
+    }
+]
